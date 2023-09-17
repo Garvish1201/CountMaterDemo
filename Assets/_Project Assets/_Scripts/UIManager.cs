@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 public class UIManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text T_playerCount;
+    [SerializeField] private TMP_Text T_levelCount;
 
     [Header (" Canvas ")]
     [SerializeField] private GameObject mainMenuCanvas;
@@ -27,6 +28,8 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         ChangeCanvas(mainMenuCanvas);
+        int _level = GameManager.instance.currentLevel + 1;
+        T_levelCount.text = $"Level {_level}";
     }
 
     public void _OnGameStart()

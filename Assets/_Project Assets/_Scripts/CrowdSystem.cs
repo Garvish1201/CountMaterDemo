@@ -4,6 +4,7 @@ using System.Collections;
 public class CrowdSystem : MonoBehaviour
 {
     [Header(" Elements ")]
+    [SerializeField] private PlayerMovement playerMovementInstance;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private Transform crowdHolder;
     [SerializeReference] private GameObject playerPrefab;
@@ -43,6 +44,9 @@ public class CrowdSystem : MonoBehaviour
     private void Update()
     {
         uiManager.SetPlayerCount(crowdHolder.childCount);
+
+        //if (playerMovementInstance.finished) return;
+        //SetPlayerLocalPosition();
     }
 
     // BONUS

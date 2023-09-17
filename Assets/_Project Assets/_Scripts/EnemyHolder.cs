@@ -84,7 +84,6 @@ public class EnemyHolder : MonoBehaviour
         else
             loopCount = crowdHolder.childCount;
         
-        Debug.Log($"Assigning enemy: {enemyTrasnforms.Count}");
         for (int i = 0; i < loopCount; i++)
         {
             // assigin a runner target to each enemy they will be attacking

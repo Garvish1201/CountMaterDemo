@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -15,7 +16,8 @@ public class GameManager : MonoBehaviour
     }
     [Header (" Elements ")]
     public GameState gameState;
-    public PlayerMovement playerMovement;  
+    public PlayerMovement playerMovement;
+    [SerializeField] private GameAnalyticsManager analyticsManagerInstance;
     
     [Header (" Level Settings")]
     public string levelCompleteTag;
@@ -47,12 +49,15 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         CheckForGameOver();
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            PlayerPrefs.DeleteAll();
-        }
     }
+
+#if UNITY_EDITOR
+    [MenuItem("PlayerPrefs / Clear PlayerPerf")]
+    static void ClearPlayerPerf()
+    {
+        PlayerPrefs.DeleteAll();
+    } 
+#endif
 
     public void CheckForGameOver()
     {
@@ -62,17 +67,14 @@ public class GameManager : MonoBehaviour
             {
                 if (playerMovement.crowdHolder.childCount <= 0)
                 {
-                    gameState = GameState.LevelCompleted;
-                    GameStateChange?.Invoke(GameState.LevelCompleted);
-                    OnLevelComplete();
+                    LevelCompleted();
                 }
             }
             else
             {
                 if (playerMovement.crowdHolder.childCount <= 0)
                 {
-                    gameState = GameState.GameOver;
-                    GameStateChange?.Invoke(GameState.GameOver);
+                    LevelFailed();
                 }
             }
         }
@@ -83,8 +85,17 @@ public class GameManager : MonoBehaviour
         gameState = GameState.LevelCompleted;
         GameStateChange?.Invoke(GameState.LevelCompleted);
 
+        analyticsManagerInstance._LevelCompleted();
         OnLevelComplete();
     }    
+
+    public void LevelFailed()
+    {
+        gameState = GameState.GameOver;
+        GameStateChange?.Invoke(GameState.GameOver);
+
+        analyticsManagerInstance._LevelFailed();
+    }
 
     private void OnLevelComplete ()
     {
