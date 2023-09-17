@@ -1,3 +1,4 @@
+using Cinemachine.Utility;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
@@ -87,7 +88,15 @@ public class PlayerMovement : MonoBehaviour
             enabled = false;
 
         // if the player has crossed the finish line sliding wont work
-        if (finished) return;
+        if (finished)
+        {
+            Vector3 _trasnformVec = transform.position;
+            _trasnformVec.x = Mathf.MoveTowards(_trasnformVec.x, 0, 2 * Time.deltaTime);
+
+            transform.position = _trasnformVec;
+
+            return;
+        }
         MoveSideWays();
     }
 

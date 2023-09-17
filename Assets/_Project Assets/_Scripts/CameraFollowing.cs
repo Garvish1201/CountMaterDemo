@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraFollowing : MonoBehaviour
 {
-    [Header (" Elements ")]
+    [Header(" Elements ")]
     [SerializeField] private Transform targetTransform;
     [SerializeField] private Vector3 positionOffset;
     [SerializeField] private Animator cameraAnimation;

@@ -4,6 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
+    [Header (" Elements ")]
+    [SerializeField] private Animator cameraAnimator;
+
+    [Header (" Text ")]
     [SerializeField] private TMP_Text T_playerCount;
     [SerializeField] private TMP_Text T_levelCount;
 
@@ -34,6 +38,7 @@ public class UIManager : MonoBehaviour
 
     public void _OnGameStart()
     {
+        cameraAnimator.SetTrigger("Animate");
         ChangeCanvas(gameplayCanvas);
     }
 
